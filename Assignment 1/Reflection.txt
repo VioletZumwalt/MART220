@@ -1,0 +1,11 @@
+Reflection on the AI coding...
+
+Incredibly funny. This is about what I expected from AI coding. 
+The file took 3 refreshes before it spat something that actually functioned, which is also a great sign.
+It sure is the colors of them, but the shapes do not reference each other in location, so that's how we get a mallard back instead of a salad.
+It looks like a mallard with a green beak. 
+AI is not AI right now. It's just spitting back associations. It doesn't truly create anything.
+This is not something that could viably replace people, and yet, people are losing jobs to it.
+I believe that, if done with sense, AI can be a good reference for explaining how code one wrote works.
+It cannot do the work for you.
+You cannot even trust it'll be correct in telling you how code works.
