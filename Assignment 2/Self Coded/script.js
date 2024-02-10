@@ -101,7 +101,7 @@ function draw() {
       forkY += 5;
   }
     
-   // Collision detection between fork and tomato
+   // Collision detection!!!
   if (
     (forkX >= toma1X - 10 && forkX <= toma1X + 10 && forkY >= toma1Y - 10 && forkY <= toma1Y + 10) ||
     (forkX >= toma2X - 10 && forkX <= toma2X + 10 && forkY >= toma2Y - 10 && forkY <= toma2Y + 10) ||
@@ -109,7 +109,7 @@ function draw() {
     (forkX >= toma4X - 10 && forkX <= toma4X + 10 && forkY >= toma4Y - 10 && forkY <= toma4Y + 10) ||
     (forkX >= toma5X - 10 && forkX <= toma5X + 10 && forkY >= toma5Y - 10 && forkY <= toma5Y + 10)
   ) {
-    // If fork touches any tomato, make it vanish
+    // If fork touches any tomato, bye
     toma1X = -100;
     toma1Y = -100;
     toma2X = -100;
