@@ -1,0 +1,10 @@
+Reflection on the AI coding...
+
+I will admit that I enjoyed seeing the way it changed the fork up. I will also admit I asked it to do 2 things.
+It only really did one of them, but that's fine. It's very interesting how this works more when it has a foundation.
+I think that's the point though.
+It's a springboard, but a springboard doesn't work unless you try to jump off it. 
+I still wouldn't trust this to do anything on its own, the code was broken the first 3 times.
+ChatGPT isn't the future, these assignments have shown that much, but what it can do isn't entirely nothing.
+it's foundational. It's like a rubber duck I throw my ideas at, but it can say things back that work maybe 1 out of 20 times.
+The more I look at ChatGPT, the more shocked I am people have been fired by companies trying to make ChatGPT functional like an employee.
