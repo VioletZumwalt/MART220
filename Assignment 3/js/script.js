@@ -14,21 +14,14 @@ function setup() {
   ySpeed = random(1, 3);
 }
 
-function draw() {
-  background(220);
-  
-  // Draw the cat image
-  image(catImg, x, y, 100, 100);
-  
-  // Move the cat
-  x += xSpeed;
-  y += ySpeed;
-  
-  // Bounce when hitting the edges
-  if (x <= 0 || x >= width - 100) {
-    xSpeed *= -1;
-  }
-  if (y <= 0 || y >= height - 100) {
-    ySpeed *= -1;
-  }
+let myFont;
+function preload() {
+  myFont = loadFont('fonts/Kingsman.ttf');
+}
+
+function setup() {
+  fill('#ED225D');
+  textFont(myFont);
+  textSize(36);
+  text('p5*js', 10, 50);
 }
