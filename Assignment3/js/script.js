@@ -20,7 +20,7 @@ let chillSpeedX, chillSpeedY;
 let jumpX, jumpY; 
 
 function setup() {
-  createCanvas(800, 600); 
+  createCanvas(1000, 800); 
   chillX = width / 2;
   chillY = height / 2;
   chillSpeedX = random(-5, 5); 
@@ -29,11 +29,11 @@ function setup() {
   jumpY = height / 3;
 
   // Move Time (5 sec?)
-  setInterval(moveJumpCat, 5000);
+  setInterval(moveJumpCat, 1000);
 }
 
 function draw() {
-  background(255);
+  background(225,192,203);
 
   // Chill locale
   chillX += chillSpeedX;
@@ -48,25 +48,25 @@ function draw() {
   }
   
   // Cat Spawner
+  image(aiCatImage, 200, 100);
+
   image(chillCatImage, chillX, chillY);
-  
-  image(aiCatImage, 200, 200);
 
   image(jumpCatImage, jumpX, jumpY);
   
   // Border
   noStroke();
   fill(150, 200, 255);
-  rect(0, 0, 800, 25);
-  rect(0, 25, 25, 600);
-  rect(25, 575, 800, 25);
-  rect(775, 25, 25, 600);
+  rect(0, 0, 1000, 25);
+  rect(0, 0, 25, 1000);
+  rect(25, 775, 1000, 25);
+  rect(975, 25, 25, 1000);
   fill(0);
   
   // Font
-  textFont(newFont);
+  textFont(Font); // Changed from newFont to Font
   textSize(25);
-  text("Violet Zumwalt", 500, 525);
+  text("Violet Zumwalt", 800, 790);
   text("Cat Images", 100, 75);
 }
 
