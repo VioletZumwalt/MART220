@@ -25,8 +25,8 @@ function setup() {
   chillY = height / 2;
   chillSpeedX = random(-5, 5); 
   chillSpeedY = random(-5, 5); 
-  jumpX = width / 2;
-  jumpY = height / 2;
+  jumpX = width / 3;
+  jumpY = height / 3;
 
   // Move Time (5 sec?)
   setInterval(moveJumpCat, 5000);
