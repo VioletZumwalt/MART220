@@ -179,4 +179,3 @@ function mouseClicked() {
     toma5X = random(0, width);
     toma5Y = random(0, height);
 }
-
