@@ -16,14 +16,17 @@ var catAnimation;
 
 var points = 0;
 
-var timer = 30; // Timer in seconds
+var timer = 0; // Timer in seconds, initially set to 0
 var timerInterval;
 
-var youWinTextSize = 60;
+var youWinTextSize = 30; // Decreased text size
 var playAgainButton;
 
-var yuckSound; // Declare the sound variable
+var yuckSound; // Declare the bad food sound variable
+var chompSound; // Declare the good food sound variable
 var cookingMusic; // Declare the cooking music variable
+
+var isMusicStarted = false; // Flag to track if music has started
 
 function preload() {
     // Load idle images
@@ -38,30 +41,27 @@ function preload() {
 
     // Load sound effects
     yuckSound = loadSound('sounds/yuck.mp3');
+    chompSound = loadSound('sounds/chomp.mp3');
     cookingMusic = loadSound('sounds/Cooking_Music.mp3');
 }
 
 function setup() {
     createCanvas(500, 500);
-
-    // Start cooking music loop
-    cookingMusic.loop();
-
+    // Set up the background pattern
+    backgroundPattern();
+    
     // Kity
     catAnimation = new AnimationImage(headX, headY, 100, 100, idleImages);
 
     // Good Food (Tomato)
     for (var i = 0; i < 5; i++) {
-        myCircles[i] = new myCircle(random(10, width - 10), random(10, height - 10), random(5, 25), random(100, 255), random(75), random(150));
+        myCircles[i] = new myCircle(random(10, width - 10), random(10, height - 10), random(5, 25), random(100, 255), random(75), random(150), false);
     }
 
     // Bad Food (Yellow Circles)
     for (var i = 0; i < 3; i++) {
-        myCircles.push(new myCircle(random(10, width - 10), random(10, height - 10), random(5, 25), 255, 255, 0));
+        myCircles.push(new myCircle(random(10, width - 10), random(10, height - 10), random(5, 25), 255, 255, 0, true));
     }
-
-    // Start timer countdown
-    timerInterval = setInterval(updateTimer, 1000);
 
     // PLAY AGAIN
     playAgainButton = createButton("Play again?");
@@ -71,13 +71,42 @@ function setup() {
 }
 
 function draw() {
-    background(120, 45, 200);
-    textSize(22);
-    text("Food!", 30, 80);
+    // Clear the canvas
+    clear();
+    
+    // Set up the background pattern
+    backgroundPattern();
 
-    // plate
-    fill(300, 300, 300);
-    circle(headX, headY, 300);
+        // plate
+        fill(50, 50, 50);
+        circle(headX, headY, 300);
+    
+      // lettuce
+      strokeWeight(8);
+      fill(0, 179, 113);
+      triangle(200, 150, 250, 192, 320, 320);
+      triangle(200, 200, 380, 200, 360, 360);
+      triangle(160, 350, 250, 192, 320, 320);
+      triangle(210, 320, 135, 192, 320, 150);
+      triangle(140, 320, 250, 192, 150, 320);
+      triangle(160, 320, 230, 150, 320, 320);
+      triangle(200, 320, 290, 150, 380, 320);
+      triangle(200, 320, 210, 150, 320, 320);
+      triangle(300, 320, 380, 200, 320, 320);
+    
+      // pepper
+      point(245, 215);
+      point(230, 185);
+      point(260, 195);
+    
+      // cheese
+      line(200, 300, 200, 150);
+      line(300, 250, 180, 270);
+      line(325, 180, 360, 200);
+      line(285, 300, 360, 330);
+    
+    // Kity
+    catAnimation.display();
 
     // Update circle positions
     updateCircles();
@@ -87,20 +116,19 @@ function draw() {
         myCircles[i].draw();
         if (myCircles[i].checkCollision(catAnimation)) {
             // collision with cat
-            if (myCircles[i].r === 255 && myCircles[i].g === 255 && myCircles[i].b === 0) {
+            if (myCircles[i].isBadFood) {
                 points--; // Decrease points for bad food
-                // Play sound effect
+                // Play bad food sound effect
                 yuckSound.play();
             } else {
                 points++;
+                // Play good food sound effect
+                chompSound.play();
             }
             myCircles[i].resetPosition();
             break;
         }
     }
-
-    // kitty
-    catAnimation.display();
 
     // Movement
     if (timer > 0) {
@@ -122,14 +150,15 @@ function draw() {
     }
 
     // Timer and points
-    fill(255);
+    fill(0); // Black text color
+    textSize(15); // Decreased text size
     textAlign(LEFT, BOTTOM);
     text("Timer: " + timer, 10, height - 10);
 
-    fill(255);
+    fill(0); // Black text color
+    textSize(15); // Decreased text size
     textAlign(LEFT, BOTTOM);
     text("Points: " + points, 10, height - 30);
-
 
     if (points === 20) {
         timer = 0;
@@ -161,12 +190,24 @@ function resetGame() {
     timer = 30;
     points = 0;
     playAgainButton.hide();
+    if (!isMusicStarted) {
+        cookingMusic.loop();
+        isMusicStarted = true;
+    }
+    
+    // Start timer interval
     timerInterval = setInterval(updateTimer, 1000);
 }
 
 function updateCircles() {
     for (var i = 0; i < myCircles.length; i++) {
         myCircles[i].jumpRandomly();
+    }
+}
+
+function mousePressed() {
+    if (timer == 0) { // Start timer only if it's not already running
+        timerInterval = setInterval(updateTimer, 1000);
     }
 }
 
@@ -197,7 +238,7 @@ class AnimationImage {
 }
 
 class myCircle {
-    constructor(x, y, diameter, r, g, b) {
+    constructor(x, y, diameter, r, g, b, isBadFood) {
         this.x = x;
         this.y = y;
         this.diameter = diameter;
@@ -206,6 +247,7 @@ class myCircle {
         this.b = b;
         this.speedX = random(-3, 3);
         this.speedY = random(-3, 3);
+        this.isBadFood = isBadFood;
     }
 
     draw() {
@@ -231,6 +273,23 @@ class myCircle {
             }
             if (this.y < 0 || this.y > height) {
                 this.speedY *= -1;
+            }
+        }
+    }
+}
+
+// Function to create background pattern
+function backgroundPattern() {
+    // Set background color
+    background(255);
+  
+    // Draw pattern
+    for (let x = 0; x < width; x += 20) {
+        for (let y = 0; y < height; y += 20) {
+            if ((x + y) % 40 === 0) {
+                fill(200);
+                noStroke();
+                circle(x, y, 10);
             }
         }
     }
