@@ -23,8 +23,6 @@ var youWinTextSize = 60;
 var playAgainButton;
 
 var yuckSound;
-var yumSound;
-var bgSound; // Added bgSound
 
 function preload() {
     // Load idle images
@@ -39,14 +37,14 @@ function preload() {
 
     // Load sound effect
     yuckSound = loadSound('sounds/yuck.mp3');
-    yumSound = loadSound('sounds/chomp.mp3'); // Fixed loadSound
-    bgSound = loadSound('sounds/CookingMusic.mp3');
+    yumSound = loudSound('sounds/chomp.mp3');
+    bgSound = loudSound('sounds/CookingMusic.mp3');
 }
 
 function setup() {
     createCanvas(500, 500);
 
-    // Kitty
+    // Kity
     catAnimation = new AnimationImage(headX, headY, 100, 100, idleImages);
 
     // Good Food (Tomato)
@@ -92,8 +90,6 @@ function draw() {
                 yuckSound.play();
             } else {
                 points++;
-                // Play yum sound for good food
-                yumSound.play();
             }
             myCircles[i].resetPosition();
             break;
@@ -131,10 +127,6 @@ function draw() {
     textAlign(LEFT, BOTTOM);
     text("Points: " + points, 10, height - 30);
 
-    // Check if background sound is playing, if not, start playing
-    if (!bgSound.isPlaying()) {
-        bgSound.loop();
-    }
 
     if (points === 20) {
         timer = 0;
