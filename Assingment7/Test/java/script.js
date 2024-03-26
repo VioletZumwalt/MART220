@@ -2,8 +2,8 @@ let headX = 250;
 let headY = 250;
 let headDirection = 5;
 
-let myCircles = []; // declare a circle array
-let greyRectangles = []; // declare an array for grey rectangles
+let myCircles = []; 
+let greyRectangles = []; 
 
 let idleImages = [];
 let runImages = [];
@@ -11,27 +11,27 @@ let runImages = [];
 let catAnimation;
 
 let points = 0;
-let health = 10; // Initialize health to 10
+let health = 10; //  health to 10
 
-let timer = 0; // Timer in seconds, initially set to 0
+let timer = 0; // Timer to 0
 let timerInterval;
 
-let youWinTextSize = 30; // Decreased text size
+let youWinTextSize = 30; 
 let playAgainButton;
 
-let yuckSound; // Declare the bad food sound variable
-let chompSound; // Declare the good food sound variable
-let cookingMusic; // Declare the cooking music variable
+let yuckSound; //  the bad food sound 
+let chompSound; //  the good food sound 
+let cookingMusic; //  the cooking music 
 
-let isMusicStarted = false; // Flag to track if music has started
+let isMusicStarted = false; 
 
 function preload() {
-    // Load idle images
+  //idle and run
     for (let i = 1; i <= 8; i++) {
         idleImages.push(loadImage('catImages/Idle (' + i + ').png'));
     }
 
-    // Load run images
+ 
     for (let i = 1; i <= 8; i++) {
         runImages.push(loadImage('catImages/Run (' + i + ').png'));
     }
@@ -44,7 +44,7 @@ function preload() {
 
 function setup() {
     createCanvas(500, 500);
-    // Set up the background pattern
+
     backgroundPattern();
     
     // Kitty
@@ -92,7 +92,7 @@ function draw() {
     line(325, 180, 360, 200);
     line(285, 300, 360, 330);
 
-    // Grey Rectangles
+    // Croutons
     for (let rect of greyRectangles) {
         rect.draw();
     }
@@ -100,21 +100,20 @@ function draw() {
     // Kitty
     catAnimation.display();
 
-    // Update circle positions
+ 
     updateCircles();
 
-    // Tomato
+    // Toma
     for (let i = 0; i < myCircles.length; i++) {
         myCircles[i].draw();
         if (myCircles[i].checkCollision(catAnimation)) {
-            // collision with cat
             if (myCircles[i].isBadFood) {
-                health--; // Decrease health for bad food
-                // Play bad food sound effect
+                health--; //ouch?
+                // Yucky
                 yuckSound.play();
             } else {
                 points++;
-                // Play good food sound effect
+                // Good Food
                 chompSound.play();
             }
             myCircles[i].resetPosition();
@@ -122,8 +121,8 @@ function draw() {
         }
     }
 
-    // Movement
-    if (timer > 0) {
+    // Running
+    if (health > 0 && timer > 0) { // Only allow movement if health is greater than 0 and timer is running
         if (keyIsDown(LEFT_ARROW)) {
             let canMove = true;
             for (let rect of greyRectangles) {
@@ -177,21 +176,21 @@ function draw() {
         }
     }
 
-    // Timer and points
-    fill(0); // Black text color
-    textSize(15); // Decreased text size
+    // Time, Score, Health!
+    fill(0); 
+    textSize(15);
     textAlign(LEFT, BOTTOM);
     text("Timer: " + timer, 10, height - 10);
 
-    fill(0); // Black text color
-    textSize(15); // Decreased text size
+    fill(0); 
+    textSize(15); 
     textAlign(LEFT, BOTTOM);
     text("Points: " + points, 10, height - 30);
 
-    fill(255, 0, 0); // Red text color for health
-    textSize(15); // Decreased text size
+    fill(255, 0, 0); 
+    textSize(15); 
     textAlign(LEFT, BOTTOM);
-    text("Health: " + health, 10, height - 50); // Display health
+    text("Health: " + health, 10, height - 50); 
 
     if (points === 10) {
         timer = 0;
@@ -201,7 +200,7 @@ function draw() {
         textAlign(CENTER, CENTER);
         text("That's a full Kitty!", width / 2, height / 2);
         playAgainButton.show();
-    } else if (health <= 0 || timer === 0) { // Game over condition
+    } else if (health <= 0 || timer === 0) { // Game over
         fill(255, 0, 0);
         textSize(youWinTextSize);
         textAlign(CENTER, CENTER);
@@ -222,34 +221,36 @@ function resetGame() {
     // Reset 
     timer = 30;
     points = 0;
-    health = 10; // Reset health to 10
+    health = 10; 
     playAgainButton.hide();
     if (!isMusicStarted) {
         cookingMusic.loop();
         isMusicStarted = true;
     }
     
-    // Clear existing grey rectangles and create new ones
     greyRectangles = [];
     for (let i = 0; i < 3; i++) {
-        let x = random(width - 50);
-        let y = random(height - 50);
+        let x, y;
+        do {
+            x = random(width - 50);
+            y = random(height - 50);
+        } while (collideRectRect(x, y, 50, 50, headX - 50, headY - 50, 100, 100)); // Ensure the rectangle doesn't collide with the cat
         greyRectangles.push(new GreyRectangle(x, y, 50, 50));
     }
     
-    // Clear existing circles and create new ones
+  
     myCircles = [];
-    // Good Food (Tomato)
+    // Toma
     for (let i = 0; i < 5; i++) {
         myCircles.push(new MyCircle(random(10, width - 10), random(10, height - 10), random(5, 25), random(100, 255), random(75), random(150), false));
     }
     
-    // Bad Food (Yellow Circles)
+    // Bad Toma
     for (let i = 0; i < 3; i++) {
         myCircles.push(new MyCircle(random(10, width - 10), random(10, height - 10), random(5, 25), 255, 255, 0, true));
     }
     
-    // Start timer interval
+
     timerInterval = setInterval(updateTimer, 1000);
 }
 
@@ -344,12 +345,12 @@ class GreyRectangle {
     }
 }
 
-// Function to create background pattern
+// BG Circles
 function backgroundPattern() {
-    // Set background color
+  
     background(255);
   
-    // Draw pattern
+ 
     for (let x = 0; x < width; x += 20) {
         for (let y = 0; y < height; y += 20) {
             if ((x + y) % 40 === 0) {
