@@ -1,0 +1,8 @@
+./catimages/attack/Jump (1).png
+./catimages/attack/Jump (2).png
+./catimages/attack/Jump (3).png
+./catimages/attack/Jump (4).png
+./catimages/attack/Jump (5).png
+./catimages/attack/Jump (6).png
+./catimages/attack/Jump (7).png
+./catimages/attack/Jump (8).png
