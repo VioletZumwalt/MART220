@@ -1,0 +1,10 @@
+./catimages/walk/Walk (1).png
+./catimages/walk/Walk (2).png
+./catimages/walk/Walk (3).png
+./catimages/walk/Walk (4).png
+./catimages/walk/Walk (5).png
+./catimages/walk/Walk (6).png
+./catimages/walk/Walk (7).png
+./catimages/walk/Walk (8).png
+./catimages/walk/Walk (9).png
+./catimages/walk/Walk (10).png
